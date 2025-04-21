@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}Расписание{% endblock %}
+{% block content %}
+<h1 class="text-2xl font-bold mb-4">Расписание</h1>
+<table class="w-full table-auto bg-white dark:bg-gray-800 shadow rounded">
+<thead><tr><th>Предмет</th><th>День</th><th>Начало</th><th>Конец</th><th>Преподаватель</th></tr></thead>
+<tbody>{% for item in schedule %}<tr><td>{{ item.subject.name }}</td><td>{{ item.day_of_week }}</td><td>{{ item.start_time }}</td><td>{{ item.end_time }}</td><td>{{ item.teacher.username }}</td></tr>{% endfor %}</tbody>
+</table>
+{% endblock %}

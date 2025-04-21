@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ru" class="">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Электронный дневник{% endblock %}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
+<nav class="bg-white dark:bg-gray-800 shadow p-4">
+  <div class="container mx-auto flex justify-between items-center">
+    <a href="{% url 'home' %}" class="text-xl font-semibold">Дневник</a>
+    <div class="space-x-4">
+      {% if user.is_authenticated %}
+      <a href="{% url 'schedule' %}" class="hover:underline">Расписание</a>
+      <a href="{% url 'grades' %}" class="hover:underline">Оценки</a>
+      <a href="{% url 'homework' %}" class="hover:underline">Домашка</a>
+      <a href="{% url 'profile' %}" class="hover:underline">Профиль</a>
+      <a href="{% url 'logout' %}" class="hover:underline">Выход</a>
+      {% else %}
+      <a href="{% url 'login' %}" class="hover:underline">Вход</a>
+      <a href="{% url 'register' %}" class="hover:underline">Регистрация</a>
+      {% endif %}
+    </div>
+    <button id="theme-toggle" class="focus:outline-none">🌓</button>
+  </div>
+</nav>
+<div class="container mx-auto p-4">
+  {% block content %}{% endblock %}
+</div>
+<script src="{% static 'js/darkmode.js' %}"></script>
+</body>
+</html>

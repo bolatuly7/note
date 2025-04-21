@@ -1,0 +1,10 @@
+{% load static %}
+
+{% extends 'base.html' %}
+
+{% block title %}Главная — Электронный дневник{% endblock %}
+
+{% block content %}
+  <h1 class="text-3xl font-bold mb-4">Добро пожаловать в Электронный дневник</h1>
+  <p>Пожалуйста, <a href="{% url 'login' %}" class="text-blue-500 hover:underline">войдите</a> или <a href="{% url 'register' %}" class="text-green-500 hover:underline">зарегистрируйтесь</a>, чтобы продолжить.</p>
+{% endblock %}

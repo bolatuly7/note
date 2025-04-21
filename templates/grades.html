@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}Оценки{% endblock %}
+{% block content %}
+<h1 class="text-2xl font-bold mb-4">Оценки</h1>
+<table class="w-full table-auto bg-white dark:bg-gray-800 shadow rounded">
+<thead><tr><th>Ученик</th><th>Предмет</th><th>Оценка</th><th>Дата</th></tr></thead>
+<tbody>{% for g in grades %}<tr><td>{{ g.student.username }}</td><td>{{ g.subject.name }}</td><td>{{ g.value }}</td><td>{{ g.date }}</td></tr>{% endfor %}</tbody>
+</table>
+{% endblock %}
