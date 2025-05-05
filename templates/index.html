@@ -1,10 +1,32 @@
+{% extends 'base.html' %}
 {% load static %}
 
-{% extends 'base.html' %}
-
-{% block title %}Главная — Электронный дневник{% endblock %}
+{% block title %}Главная — AIDI Journal{% endblock %}
 
 {% block content %}
-  <h1 class="text-3xl font-bold mb-4">Добро пожаловать в Электронный дневник</h1>
-  <p>Пожалуйста, <a href="{% url 'login' %}" class="text-blue-500 hover:underline">войдите</a> или <a href="{% url 'register' %}" class="text-green-500 hover:underline">зарегистрируйтесь</a>, чтобы продолжить.</p>
+  <!-- Подключаем стили для главной страницы -->
+  <link href="{% static 'css/index.css' %}" rel="stylesheet">
+
+  <div class="min-h-screen flex items-center justify-center p-6 bg-cover bg-center page-gradient-bg">
+    <div class="text-center max-w-xl transition-all duration-700 ease-out transform opacity-0 translate-y-10 animate-fadein">
+      <h1 class="text-5xl font-extrabold text-indigo-700 dark:text-indigo-400 mb-6">
+        Добро пожаловать в <br> AIDI Journal
+      </h1>
+
+      <p class="text-lg text-gray-700 dark:text-gray-300 mb-8">
+        Ваш современный электронный дневник для учёбы.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-6 justify-center">
+        <a href="{% url 'login' %}"
+           class="px-8 py-4 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 transition-all duration-300 shadow-md text-center">
+          Войти
+        </a>
+        <a href="{% url 'register' %}"
+           class="px-8 py-4 bg-green-500 text-white rounded-xl font-semibold hover:bg-green-600 transition-all duration-300 shadow-md text-center">
+          Регистрация
+        </a>
+      </div>
+    </div>
+  </div>
 {% endblock %}

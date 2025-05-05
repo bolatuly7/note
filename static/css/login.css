@@ -1,0 +1,15 @@
+/* Импорт общих стилей: градиенты, анимации блобов, кнопки и поля */
+@import url("custom.css");
+
+/* Центрирование и фон */
+.page-gradient-bg {
+  background: linear-gradient(to bottom right, #312E81, #7C3AED, #EC4899);
+}
+
+/* Карточка формы */
+.relative {
+  backdrop-filter: blur(20px);
+}
+
+/* Поля ввода и кнопка — уже заданы в custom.css */
+/* Просто убедитесь, что используете классы .input-custom и .btn-gradient */

@@ -1,0 +1,191 @@
+/* static/css/custom.css */
+
+/* --------------------------------------------- */
+/* 1. Анимация «блобов»                         */
+/* --------------------------------------------- */
+@keyframes blob {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+}
+
+.animate-blob {
+  animation: blob 8s infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+/* --------------------------------------------- */
+/* 2. Фоновые градиенты                          */
+/* --------------------------------------------- */
+.page-gradient-bg {
+  background: linear-gradient(to bottom right, #312E81, #7C3AED, #EC4899);
+}
+
+/* --------------------------------------------- */
+/* 3. Размытие заднего фона контейнера           */
+/* --------------------------------------------- */
+.backdrop-blur-lg {
+  backdrop-filter: blur(20px);
+}
+
+/* --------------------------------------------- */
+/* 4. Полупрозрачные поля ввода                  */
+/* --------------------------------------------- */
+.input-custom {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 0.75rem;
+  padding: 0.5rem 1rem;
+  color: #fff;
+  transition: box-shadow 0.3s ease;
+}
+
+.input-custom:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.5);
+}
+
+/* --------------------------------------------- */
+/* 5. Градиентная кнопка                         */
+/* --------------------------------------------- */
+.btn-gradient {
+  background: linear-gradient(90deg, #34D399, #3B82F6);
+  border-radius: 9999px;
+  padding: 0.75rem;
+  font-weight: 700;
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.btn-gradient:hover {
+  transform: translateY(-4px);
+}
+
+/* --------------------------------------------- */
+/* 6. Анимация «появления» контента               */
+/* --------------------------------------------- */
+@keyframes fadein {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadein {
+  animation: fadein 1s ease-out forwards;
+}
+
+/* --------------------------------------------- */
+/* 7. Стили карточек (schedule & homework)       */
+/* --------------------------------------------- */
+.card {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  color: #fff;
+  backdrop-filter: blur(10px);
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.15),
+    0 10px 10px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* --------------------------------------------- */
+/* 8. Стили таблицы оценок                       */
+/* --------------------------------------------- */
+.table-custom {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-custom thead th {
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  text-align: left;
+  font-weight: 600;
+}
+
+.table-custom tbody td {
+  padding: 1rem;
+  color: #fff;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.table-custom tbody tr:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* --------------------------------------------- */
+/* 9. Стили профиля                              */
+/* --------------------------------------------- */
+.profile-img,
+.profile-placeholder {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+}
+
+.profile-img {
+  object-fit: cover;
+  border: 3px solid rgba(255, 255, 255, 0.5);
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.profile-placeholder {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 2.5rem;
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+
+html {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+:root {
+  --bg: #f3f4f6;
+  --fg: #1f2937;
+}
+
+:root.dark {
+  --bg: #111827;
+  --fg: #f9fafb;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+}

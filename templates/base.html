@@ -1,34 +1,67 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="ru" class="">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}Электронный дневник{% endblock %}</title>
+  <title>{% block title %}AIDI Journal{% endblock %}</title>
+
+  <!-- Tailwind и единый кастомный CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+
+  <!-- Скрипт переключения темы -->
+  <script defer src="{% static 'js/theme-toggle.js' %}"></script>
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
-<nav class="bg-white dark:bg-gray-800 shadow p-4">
-  <div class="container mx-auto flex justify-between items-center">
-    <a href="{% url 'home' %}" class="text-xl font-semibold">Дневник</a>
-    <div class="space-x-4">
-      {% if user.is_authenticated %}
-      <a href="{% url 'schedule' %}" class="hover:underline">Расписание</a>
-      <a href="{% url 'grades' %}" class="hover:underline">Оценки</a>
-      <a href="{% url 'homework' %}" class="hover:underline">Домашка</a>
-      <a href="{% url 'profile' %}" class="hover:underline">Профиль</a>
-      <a href="{% url 'logout' %}" class="hover:underline">Выход</a>
-      {% else %}
-      <a href="{% url 'login' %}" class="hover:underline">Вход</a>
-      <a href="{% url 'register' %}" class="hover:underline">Регистрация</a>
-      {% endif %}
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100 transition-colors duration-300">
+
+  <!-- Flash-сообщения -->
+  {% if messages %}
+    <div class="fixed top-4 right-4 space-y-2 z-50">
+      {% for msg in messages %}
+        <div class="px-4 py-2 rounded shadow-md transition-colors duration-300 {% if msg.tags == 'error' %}bg-red-500 text-white{% else %}bg-green-500 text-white{% endif %}">
+          {{ msg }}
+        </div>
+      {% endfor %}
     </div>
-    <button id="theme-toggle" class="focus:outline-none">🌓</button>
+  {% endif %}
+
+  <nav class="bg-white dark:bg-gray-800 shadow-lg p-4 transition-colors duration-300">
+    <div class="container mx-auto flex justify-between items-center">
+      <a href="{% url 'home' %}" class="flex items-center">
+        <img src="{% static 'img/logo.png' %}" alt="AIDI Journal" class="h-24 w-auto mr-2">
+        <span class="text-2xl font-bold text-indigo-700">AIDI Journal</span>
+      </a>
+
+      <div class="space-x-6 flex items-center">
+        {% if user.is_authenticated %}
+          <a href="{% url 'schedule' %}" class="hover:text-indigo-600">Расписание</a>
+          <a href="{% url 'grades' %}" class="hover:text-indigo-600">Оценки</a>
+          <a href="{% url 'homework' %}" class="hover:text-indigo-600">Домашка</a>
+          {% if user.role == 'teacher' %}
+            <a href="{% url 'mark_attendance' %}" class="hover:text-indigo-600">Посещаемость</a>
+          {% endif %}
+          <a href="{% url 'profile' %}" class="hover:text-indigo-600">Профиль</a>
+          <form method="post" action="{% url 'logout' %}" class="inline">
+            {% csrf_token %}
+            <button type="submit" class="hover:text-red-500">Выйти</button>
+          </form>
+        {% else %}
+          <a href="{% url 'login' %}" class="hover:text-indigo-600">Вход</a>
+          <a href="{% url 'register' %}" class="hover:text-indigo-600">Регистрация</a>
+        {% endif %}
+      </div>
+
+      <!-- Кнопка переключения темы -->
+      <button id="theme-toggle" class="focus:outline-none p-2 rounded transition-colors duration-300">
+        <span id="icon-light" class="hidden">🌞</span>
+        <span id="icon-dark"  class="hidden">🌙</span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="container mx-auto p-8">
+    {% block content %}{% endblock %}
   </div>
-</nav>
-<div class="container mx-auto p-4">
-  {% block content %}{% endblock %}
-</div>
-<script src="{% static 'js/darkmode.js' %}"></script>
 </body>
 </html>

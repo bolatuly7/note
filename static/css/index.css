@@ -1,0 +1,18 @@
+/* Импорт общих стилей: градиенты, анимации блобов, кнопки */
+@import url("custom.css");
+
+/* Анимация «появления» контента */
+@keyframes fadein {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadein {
+  animation: fadein 1s ease-out forwards;
+}

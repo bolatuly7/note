@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Ответ на ДЗ — {{ homework.subject.name }}{% endblock %}
+
+{% block content %}
+
+  <!-- Подключаем единый CSS -->
+
+  <link href="{% static 'css/custom.css' %}" rel="stylesheet">
+
+  <div class="min-h-screen flex items-center justify-center page-gradient-bg p-6">
+    <div class="relative bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl shadow-2xl p-10 w-full max-w-md border border-white border-opacity-20 overflow-hidden">
+      <!-- Декоративные блобы -->
+      <div class="absolute -top-12 -left-12 w-48 h-48 bg-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+      <div class="absolute -bottom-12 -right-12 w-48 h-48 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+
+```
+  <h1 class="text-3xl font-extrabold text-white text-center mb-6">Ответ на: {{ homework.subject.name }}</h1>
+  <p class="text-gray-200 mb-6">{{ homework.description }}</p>
+  <p class="text-sm opacity-80 mb-6">Срок сдачи: <span class="font-semibold">{{ homework.due_date }}</span></p>
+
+  <form method="post" enctype="multipart/form-data" class="space-y-6">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    {% for field in form %}
+      <div class="flex flex-col">
+        <label class="mb-2 text-white font-medium">{{ field.label }}</label>
+        {{ field }}
+        {% if field.help_text %}
+          <small class="text-gray-300">{{ field.help_text }}</small>
+        {% endif %}
+        {% for error in field.errors %}
+          <p class="mt-1 text-red-300 text-sm">{{ error }}</p>
+        {% endfor %}
+      </div>
+    {% endfor %}
+    <button type="submit" class="btn-gradient w-full py-3 font-semibold">Отправить ответ</button>
+  </form>
+
+  {% if submission %}
+    <p class="mt-4 text-green-300 text-sm">Ваш предыдущий ответ сохранён ({{ submission.submitted|date:"d.m.Y H:i" }}).</p>
+  {% endif %}
+</div>
+```
+
+  </div>
+{% endblock %}

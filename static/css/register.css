@@ -1,0 +1,15 @@
+/* Импорт общих стилей: градиенты, блобы, кнопки и поля */
+@import url("custom.css");
+
+/* Фон страницы регистрация */
+.page-gradient-bg {
+  background: linear-gradient(to bottom right, #312E81, #7C3AED, #EC4899);
+}
+
+/* Карточка формы */
+.relative {
+  backdrop-filter: blur(20px);
+}
+
+/* Поля формы и кнопка уже определены в custom.css */
+/* Убедитесь, что элементы используют классы .input-custom и .btn-gradient */

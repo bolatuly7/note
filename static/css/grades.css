@@ -1,0 +1,28 @@
+/* CSS для страницы оценок (static/css/grades.css) */
+
+/* Импорт общих стилей (анимации «блобов», градиентные кнопки и т.п.) */
+@import url("custom.css");
+
+/* Базовая таблица */
+.table-custom {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-custom thead th {
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  text-align: left;
+  font-weight: 600;
+}
+
+.table-custom tbody td {
+  padding: 1rem;
+  color: #fff;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.table-custom tbody tr:hover {
+  background: rgba(255, 255, 255, 0.1);
+}

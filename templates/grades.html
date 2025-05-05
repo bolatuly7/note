@@ -1,9 +1,59 @@
 {% extends 'base.html' %}
-{% block title %}Оценки{% endblock %}
+{% load static %}
+
+{% block title %}Оценки — AIDI Journal{% endblock %}
+
 {% block content %}
-<h1 class="text-2xl font-bold mb-4">Оценки</h1>
-<table class="w-full table-auto bg-white dark:bg-gray-800 shadow rounded">
-<thead><tr><th>Ученик</th><th>Предмет</th><th>Оценка</th><th>Дата</th></tr></thead>
-<tbody>{% for g in grades %}<tr><td>{{ g.student.username }}</td><td>{{ g.subject.name }}</td><td>{{ g.value }}</td><td>{{ g.date }}</td></tr>{% endfor %}</tbody>
-</table>
+
+  <!-- Подключаем единый CSS -->
+
+  <link href="{% static 'css/custom.css' %}" rel="stylesheet">
+
+  <div class="min-h-screen flex items-center justify-center page-gradient-bg p-6">
+    <div class="relative bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl shadow-2xl p-10 max-w-4xl w-full border border-white border-opacity-20 overflow-hidden">
+      <!-- Декоративные блобы -->
+      <div class="absolute -top-12 -left-12 w-48 h-48 bg-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+      <div class="absolute -bottom-12 -right-12 w-48 h-48 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+
+```
+  <h1 class="text-4xl font-extrabold text-white text-center mb-8">Оценки</h1>
+
+  {% if user.is_authenticated and user.role == 'teacher' %}
+    <div class="mb-6 text-center">
+      <a href="{% url 'add_grade' %}" class="btn-gradient inline-block px-6 py-3">
+        + Добавить оценку
+      </a>
+    </div>
+  {% endif %}
+
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100">
+      <thead class="bg-gray-200 dark:bg-gray-700">
+        <tr>
+          <th class="px-6 py-3">Ученик</th>
+          <th class="px-6 py-3">Предмет</th>
+          <th class="px-6 py-3">Оценка</th>
+          <th class="px-6 py-3">Дата</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for g in grades %}
+          <tr class="border-t hover:bg-gray-50 dark:hover:bg-gray-700">
+            <td class="px-6 py-4">{{ g.student.username }}</td>
+            <td class="px-6 py-4">{{ g.subject.name }}</td>
+            <td class="px-6 py-4">{{ g.value }}</td>
+            <td class="px-6 py-4">{{ g.date }}</td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="4" class="text-center py-8 text-gray-300">Нет оценок</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+```
+
+  </div>
 {% endblock %}

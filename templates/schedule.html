@@ -1,9 +1,52 @@
 {% extends 'base.html' %}
-{% block title %}Расписание{% endblock %}
+{% load static %}
+
+{% block title %}Расписание — AIDI Journal{% endblock %}
+
 {% block content %}
-<h1 class="text-2xl font-bold mb-4">Расписание</h1>
-<table class="w-full table-auto bg-white dark:bg-gray-800 shadow rounded">
-<thead><tr><th>Предмет</th><th>День</th><th>Начало</th><th>Конец</th><th>Преподаватель</th></tr></thead>
-<tbody>{% for item in schedule %}<tr><td>{{ item.subject.name }}</td><td>{{ item.day_of_week }}</td><td>{{ item.start_time }}</td><td>{{ item.end_time }}</td><td>{{ item.teacher.username }}</td></tr>{% endfor %}</tbody>
-</table>
+  <!-- Подключаем единый CSS -->
+  <link href="{% static 'css/custom.css' %}" rel="stylesheet">
+
+  <div class="min-h-screen flex items-center justify-center page-gradient-bg p-6">
+    <div class="relative bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl shadow-2xl p-10 max-w-6xl w-full border border-white border-opacity-20 overflow-hidden">
+      <!-- Декоративные блобы -->
+      <div class="absolute -top-12 -left-12 w-48 h-48 bg-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+      <div class="absolute -bottom-12 -right-12 w-48 h-48 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+
+      <h1 class="text-4xl font-extrabold text-white text-center mb-8">Расписание занятий</h1>
+
+      {% if user.is_authenticated and user.role == 'teacher' %}
+        <div class="mb-6 text-center">
+          <a href="{% url 'add_homework' %}" class="btn-gradient inline-block px-6 py-3 rounded-xl mr-4">
+            ➕ Добавить ДЗ
+          </a>
+          <a href="{% url 'mark_attendance' %}" class="btn-gradient inline-block px-6 py-3 rounded-xl">
+            📝 Отметить посещаемость
+          </a>
+        </div>
+      {% endif %}
+
+      {% if schedule %}
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {% for item in schedule %}
+            <div class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl p-6 hover:shadow-2xl transition-all duration-300">
+              <h2 class="text-2xl font-bold text-indigo-600 mb-2">{{ item.subject.name }}</h2>
+              <p class="text-gray-700 dark:text-gray-300 mb-1">
+                <span class="font-semibold">День:</span> {{ item.day_of_week }}
+              </p>
+              <p class="text-gray-700 dark:text-gray-300 mb-2">
+                <span class="font-semibold">Время:</span> {{ item.start_time }} – {{ item.end_time }}
+              </p>
+              <p class="text-gray-600 dark:text-gray-400 text-sm">
+                <span class="font-semibold">Преподаватель:</span> {{ item.teacher.username }}
+              </p>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="text-center text-gray-300 text-lg mt-12">Расписание ещё не создано.</p>
+      {% endif %}
+
+    </div>
+  </div>
 {% endblock %}

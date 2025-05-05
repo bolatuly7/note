@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Добавить ДЗ{% endblock %}
+
+{% block content %}
+  <div class="min-h-screen flex items-center justify-center page-gradient-bg p-6">
+    <div class="relative bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl shadow-2xl p-10 max-w-md w-full border border-white border-opacity-20 overflow-hidden">
+      <!-- Декоративные «блоб»-элементы -->
+      <div class="absolute -top-10 -left-10 w-40 h-40 bg-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+      <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+
+      <h1 class="text-3xl font-extrabold text-white text-center mb-8">Новое домашнее задание</h1>
+
+      <form method="post" class="space-y-6">
+        {% csrf_token %}
+        {% for field in form %}
+          <div class="flex flex-col">
+            <label class="mb-2 text-white font-medium">{{ field.label }}</label>
+            {{ field }}  {# input уже имеет class="input-custom" #}
+            {% if field.errors %}
+              <p class="mt-1 text-red-300 text-sm">{{ field.errors }}</p>
+            {% endif %}
+          </div>
+        {% endfor %}
+        <button type="submit" class="btn-gradient w-full py-3 font-semibold">
+          Сохранить
+        </button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

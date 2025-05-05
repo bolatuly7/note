@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Редактировать профиль — AIDI Journal{% endblock %}
+
+{% block content %}
+  <!-- Подключаем общий CSS -->
+  <link href="{% static 'css/custom.css' %}" rel="stylesheet">
+
+  <div class="min-h-screen flex items-center justify-center page-gradient-bg p-6">
+    <div class="relative bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl shadow-2xl p-10 w-full max-w-md border border-white border-opacity-20 overflow-hidden">
+      <h1 class="text-3xl font-bold text-white text-center mb-6">Редактировать профиль</h1>
+      <form method="post" enctype="multipart/form-data" class="space-y-6">
+        {% csrf_token %}
+        {% for field in form %}
+          <div class="flex flex-col">
+            <label class="mb-2 text-white font-medium">{{ field.label }}</label>
+            {{ field }}
+            {% if field.help_text %}
+              <small class="text-gray-300">{{ field.help_text }}</small>
+            {% endif %}
+            {% if field.errors %}
+              <p class="mt-1 text-red-300 text-sm">{{ field.errors }}</p>
+            {% endif %}
+          </div>
+        {% endfor %}
+        <button type="submit" class="btn-gradient w-full py-3 font-semibold">
+          Сохранить
+        </button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Отметить посещаемость — AIDI Journal{% endblock %}
+{% block content %}
+  <link href="{% static 'css/custom.css' %}" rel="stylesheet">
+  <div class="min-h-screen flex items-center justify-center page-gradient-bg p-6">
+    <div class="bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl shadow-2xl p-10 w-full max-w-lg">
+      <h1 class="text-3xl font-bold text-white mb-6 text-center">Отметить посещаемость</h1>
+      <form method="post" class="space-y-6">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div class="flex flex-col">
+          {{ form.date.label_tag }} {{ form.date }}
+          {{ form.date.errors }}
+        </div>
+        <div class="flex flex-col">
+          {{ form.schedule_item.label_tag }} {{ form.schedule_item }}
+          {{ form.schedule_item.errors }}
+        </div>
+        <div class="flex flex-col">
+          <label class="mb-2 text-white font-medium">{{ form.students.label }}</label>
+          {{ form.students }}
+        </div>
+        <button type="submit" class="btn-gradient w-full py-3 font-semibold">
+          Сохранить
+        </button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

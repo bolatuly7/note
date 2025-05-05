@@ -1,6 +1,41 @@
 {% extends 'base.html' %}
-{% block title %}Регистрация{% endblock %}
+{% load static %}
+
+{% block title %}Регистрация — AIDI Journal{% endblock %}
+
 {% block content %}
-<h1 class="text-2xl font-bold mb-4">Регистрация</h1>
-<form method="post" class="space-y-4">{% csrf_token %}{{ form.as_p }}<button class="px-4 py-2 bg-green-500 text-white rounded">Зарегистрироваться</button></form>
+  <!-- Подключаем единый файл стилей -->
+  <link href="{% static 'css/custom.css' %}" rel="stylesheet">
+
+  <div class="min-h-screen flex items-center justify-center page-gradient-bg p-6">
+    <div class="relative bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl shadow-2xl p-10 w-full max-w-md border border-white border-opacity-20 overflow-hidden">
+      <!-- Декоративные «блоб»-элементы -->
+      <div class="absolute -top-12 -left-12 w-40 h-40 bg-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+      <div class="absolute -bottom-12 -right-12 w-40 h-40 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+
+      <h1 class="text-4xl font-extrabold text-center text-white mb-8">Создать аккаунт</h1>
+
+      <form method="post" class="space-y-6">
+        {% csrf_token %}
+        {% for field in form %}
+          <div class="flex flex-col">
+            <label class="mb-2 text-white font-medium">{{ field.label }}</label>
+            {{ field }}  {# input уже имеет class="input-custom" из forms.py #}
+            {% if field.errors %}
+              <p class="mt-1 text-red-300 text-sm">{{ field.errors }}</p>
+            {% endif %}
+          </div>
+        {% endfor %}
+
+        <button type="submit" class="btn-gradient w-full py-3 font-semibold">
+          Зарегистрироваться
+        </button>
+      </form>
+
+      <p class="text-center text-gray-300 mt-6">
+        Уже есть аккаунт?
+        <a href="{% url 'login' %}" class="underline text-white hover:text-indigo-200">Войти</a>
+      </p>
+    </div>
+  </div>
 {% endblock %}

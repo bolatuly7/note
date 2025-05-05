@@ -1,6 +1,36 @@
 {% extends 'base.html' %}
-{% block title %}Профиль{% endblock %}
+{% load static %}
+
+{% block title %}Профиль — AIDI Journal{% endblock %}
+
 {% block content %}
-<h1 class="text-2xl font-bold mb-4">Профиль {{ user.username }}</h1>
-<p>Роль: {{ user.get_role_display }}</p>
+  <!-- Подключаем стили для страницы профиля -->
+  <link href="{% static 'css/profile.css' %}" rel="stylesheet">
+
+  <div class="min-h-screen flex items-center justify-center page-gradient-bg p-6">
+    <div class="relative bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl shadow-2xl p-10 max-w-md w-full border border-white border-opacity-20 overflow-hidden text-center">
+      <!-- Декоративные «блоб»-элементы -->
+      <div class="absolute -top-12 -left-12 w-48 h-48 bg-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+      <div class="absolute -bottom-12 -right-12 w-48 h-48 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+
+      {% if user.photo %}
+        <img src="{{ user.photo.url }}" alt="Фото профиля"
+             class="profile-img mx-auto mb-6">
+      {% else %}
+        <div class="profile-placeholder mx-auto mb-6">
+          👤
+        </div>
+      {% endif %}
+
+      <h1 class="text-3xl font-extrabold text-white mb-4">{{ user.username }}</h1>
+      <p class="text-lg text-gray-200 mb-2">Роль: {{ user.get_role_display }}</p>
+      <p class="text-gray-300">Email: {{ user.email }}</p>
+
+      <div class="mt-6">
+        <a href="{% url 'profile_edit' %}" class="btn-gradient px-6 py-2 inline-block">
+          Изменить профиль
+        </a>
+      </div>
+    </div>
+  </div>
 {% endblock %}
