@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/04b3861c-1b36-456f-909d-6a269c3edb82)
+
 # 📘 AlDi Journal
 
 **AlDi Journal** is a modern web-based electronic journal built with Django and styled using Tailwind CSS.  
