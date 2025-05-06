@@ -1,0 +1,11 @@
+{# templates/email/activate_account.html #}
+{% autoescape off %}
+Привет, {{ user.username }}!
+
+Благодарим за регистрацию на AIDI Journal.
+Чтобы подтвердить свою почту и активировать аккаунт, перейдите по ссылке:
+
+{{ activate_url }}
+
+Если это письмо пришло к вам по ошибке, просто проигнорируйте его.
+{% endautoescape %}

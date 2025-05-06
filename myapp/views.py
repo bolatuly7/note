@@ -5,6 +5,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponseForbidden
 from django.utils import timezone
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
+from django.urls import reverse
+from django.core.mail import send_mail
 
 from .forms import (
     CustomUserCreationForm,
@@ -22,6 +27,7 @@ from .models import (
     HomeworkSubmission,
     Attendance,
 )
+from .tokens import email_verification_token
 
 # Декоратор: доступ только для учителей
 def teacher_required(view_func):
@@ -48,17 +54,54 @@ def logout_view(request):
     logout(request)
     return redirect('login')
 
-# 👤 РЕГИСТРАЦИЯ
+# 👤 РЕГИСТРАЦИЯ с подтверждением по почте
 def register_view(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('schedule')
+            user = form.save(commit=False)
+            user.is_active = False
+            user.save()
+
+            # Генерация токена и uid
+            uid = urlsafe_base64_encode(force_bytes(user.pk))
+            token = email_verification_token.make_token(user)
+            activation_url = request.build_absolute_uri(
+                reverse('activate', kwargs={'uidb64': uid, 'token': token})
+            )
+
+            # Отправка письма
+            subject = 'Подтвердите свой аккаунт на AIDI Journal'
+            message = render_to_string('email/activate_account.html', {
+                'user': user,
+                'activate_url': activation_url,
+            })
+            send_mail(subject, message, None, [user.email])
+
+            messages.success(request,
+                'Спасибо за регистрацию! Проверьте почту и перейдите по ссылке для активации.'
+            )
+            return redirect('login')
     else:
         form = CustomUserCreationForm()
     return render(request, 'register.html', {'form': form})
+
+# 📨 Активация аккаунта
+def activate_account(request, uidb64, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = CustomUser.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, CustomUser.DoesNotExist):
+        user = None
+
+    if user is not None and email_verification_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        messages.success(request, 'Ваш аккаунт активирован! Теперь вы можете войти.')
+        return redirect('login')
+
+    messages.error(request, 'Ссылка активации недействительна или устарела.')
+    return redirect('home')
 
 # 🏠 ЛАНДИНГ
 def landing_view(request):
